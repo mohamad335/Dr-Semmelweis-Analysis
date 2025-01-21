@@ -9,9 +9,9 @@ pd.options.display.float_format = '{:,.2f}'.format
 # Create locators for ticks on the time axis
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
-df_yearly = pd.read_csv('annual_deaths_by_clinic.csv')
+df_yearly = pd.read_csv('data/annual_deaths_by_clinic.csv')
 # parse_dates avoids DateTime conversion later
-df_monthly = pd.read_csv('monthly_deaths.csv', 
+df_monthly = pd.read_csv('data/monthly_deaths.csv', 
                       parse_dates=['date'])
 print(f"Any yearly dublicate? {df_yearly.duplicated().values.any()}")
 print(f"Any monthly dublicate? {df_monthly.duplicated().values.any()}")
@@ -31,7 +31,26 @@ def total_births_deaths():
     ax1.plot(df_monthly.date, df_monthly.deaths, color='skyblue')
     ax2.plot(df_monthly.date, df_monthly.births, color='red')
     plt.title('Total Number of Monthly Births and Deaths', fontdict=font1)
-    plt.savefig('total_births_deaths.png')
-
+    plt.savefig('images/total_births_deaths.png')
     plt.show()
-total_births_deaths()
+def yearly_births_deaths_clinic():
+        line=px.line(df_yearly
+                 , x='year'
+                 , y=['births']
+                 , title='Total Number of Yearly Births by Clinic'
+                 ,color='clinic')
+        line.update_layout(xaxis_title='Year', yaxis_title='Births and Deaths')
+        line.write_image('images/yearly_births_deaths_clinic.png')
+        line.show()
+        line2=px.line(df_yearly
+                 , x='year'
+                 , y=['deaths']
+                 , title='Total Number of Yearly Deaths by Clinic'
+                 ,color='clinic')
+        line2.update_layout(xaxis_title='Year', yaxis_title='Births and Deaths')
+        line2.write_image('images/yearly_births_deaths_clinic2.png')
+        line2.show()
+yearly_births_deaths_clinic()
+   
+
+
