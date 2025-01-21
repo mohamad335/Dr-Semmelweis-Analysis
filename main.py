@@ -51,6 +51,24 @@ def yearly_births_deaths_clinic():
         line2.write_image('images/yearly_births_deaths_clinic2.png')
         line2.show()
 yearly_births_deaths_clinic()
+#avarage of deths per clinic
+df_yearly['pct_deaths'] = df_yearly['deaths'] / df_yearly['births']
+df_clinic1 = df_yearly[df_yearly['clinic'] == 'clinic 1']
+avg = df_clinic1.deaths.sum() / df_clinic1.births.sum() * 100
+print(f"Average deaths per year in clinic 1: {avg:.2f}%")
+df_clinic2 = df_yearly[df_yearly['clinic'] == 'clinic 2']
+avg = df_clinic2.deaths.sum() / df_clinic2.births.sum() * 100
+print(f"Average deaths per year in clinic 2: {avg:.2f}%")
+def yearly_pct_deaths():
+    line=px.line(df_yearly
+                 , x='year'
+                 , y=['pct_deaths']
+                 , title='Proportion of Yearly Deaths by Clinic'
+                 ,color='clinic')
+    line.update_layout(xaxis_title='Year', yaxis_title='Percentage of Deaths')
+    line.write_image('images/yearly_pct_deaths.png')
+    line.show()
+yearly_pct_deaths()
    
 
 
