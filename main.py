@@ -105,7 +105,37 @@ def after_and_before_handwashing():
      plt.ylabel('Percentage of Monthly Deaths')
      plt.savefig('images/after_and_before_handwashing.png')
      plt.show()
-after_and_before_handwashing()
+#average percentage of monthly deaths before handwashing (i.e., before June 1847)
+avrg_before_handwashing=before_handwashing.pct_deaths.mean()*100
+print(f"Average percentage of monthly deaths before handwashing: {avrg_before_handwashing:.2f}%")
+#average percentage of monthly deaths after handwashing (i.e., after June 1847)
+avrg_after_handwashing=after_handwashing.pct_deaths.mean()*100
+print(f"Average percentage of monthly deaths after handwashing: {avrg_after_handwashing:.2f}%")
+#handwashing reduce the average chance of dying in childbirth in percentage terms
+print(f"Change in percentage of monthly deaths after handwashing: {avrg_before_handwashing-avrg_after_handwashing:.2f}%")
+#lower chances of dying after handwashing compared to before
+times=avrg_before_handwashing/avrg_after_handwashing
+print(f"Ratio of average monthly deaths before and after handwashing: {times:.2f}")
+#add a column to df_monthly that shows if a particular date was before or after the start of handwashing.
+df_monthly['washing_hands'] = np.where(df_monthly['date'] < handwashing_start, 'NO', 'Yes')
+def box_washing_hands():
+    plt.figure(figsize=(10, 4), dpi=110)
+    box= px.box(df_monthly
+                ,x='washing_hands'
+                , y='pct_deaths'
+                ,color='washing_hands'
+                , title='How Have the Stats Changed with Handwashing?')
+                # , title='How Have the Stats Changed with Handwashing?')
+    box.update_layout(xaxis_title='Washing Hands?', yaxis_title='Percentage of Monthly Deaths')
+    box.write_image('images/box_washing_hands.png')
+    box.show()
+box_washing_hands()  
+     
+
+
+
+
+
      
 
 
