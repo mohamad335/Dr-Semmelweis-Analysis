@@ -146,10 +146,29 @@ def Histogram_Monthly_Distribution_Outcomes():
      
      fig.write_image('images/Histogram_Monthly_Distribution_Outcomes.png')
      fig.show()
-Histogram_Monthly_Distribution_Outcomes()
-      
-    
-
+'''Use Seaborn's .kdeplot() to create two kernel density estimates
+ of the pct_deaths, one for before handwashing and one for after.'''  
+def KDE_Monthly_Distribution_Outcomes():
+     plt.figure(figsize=(10, 4), dpi=110)
+     sns.kdeplot(before_handwashing.pct_deaths, 
+                 shade=True, 
+                 label='before handwashing',
+                 clip=(0,1),  # Ensure it starts from 0
+                 bw_adjust=0.5)  # Adjust bandwidth for smoothing
+     sns.kdeplot(after_handwashing.pct_deaths, 
+                 shade=True, 
+                 label='after handwashing',
+                 clip=(0,1),  # Ensure it starts from 0
+                 bw_adjust=0.5)  # Adjust bandwidth for smoothing
+     plt.title('Estimated PDF of Monthly Death Rate by Handwashing')
+     plt.xlabel('Proportion of Monthly Deaths')
+     plt.ylabel('Density')
+     plt.legend()
+     plt.xlim(0, 0.4)  # Set x-axis limits
+     plt.ylim(0, None)  # Set y-axis limits to start from 0
+     plt.savefig('images/KDE_Monthly_Distribution_Outcomes.png')
+     plt.show()  
+KDE_Monthly_Distribution_Outcomes()
 
 
 
