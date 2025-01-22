@@ -4,6 +4,7 @@ import plotly.express as px
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+from scipy import stats
 
 pd.options.display.float_format = '{:,.2f}'.format
 # Create locators for ticks on the time axis
@@ -168,7 +169,15 @@ def KDE_Monthly_Distribution_Outcomes():
      plt.ylim(0, None)  # Set y-axis limits to start from 0
      plt.savefig('images/KDE_Monthly_Distribution_Outcomes.png')
      plt.show()  
-KDE_Monthly_Distribution_Outcomes()
+#Use T-test to calculate the p-value for the null hypothesis that the two distributions are identical.
+t_stat, p_value = stats.ttest_ind(a=before_handwashing.pct_deaths, 
+                                  b=after_handwashing.pct_deaths)
+print(f'p-palue is {p_value:.10f}')
+print(f't-statstic is {t_stat:.4}')
+'''This code performs a t-test on the pct_deaths before 
+and after handwashing and prints the p-value and t-statistic. 
+If the p-value is small (e.g., less than 0.05), 
+it suggests that handwashing had a significant effect on reducing deaths.'''
 
 
 
