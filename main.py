@@ -129,9 +129,26 @@ def box_washing_hands():
     box.update_layout(xaxis_title='Washing Hands?', yaxis_title='Percentage of Monthly Deaths')
     box.write_image('images/box_washing_hands.png')
     box.show()
-box_washing_hands()  
+def Histogram_Monthly_Distribution_Outcomes():
+     fig = px.histogram(df_monthly
+                        ,x='pct_deaths'
+                        ,marginal='box'
+                        ,nbins=30
+                        ,opacity=0.6
+                        ,color='washing_hands'
+                        ,title='Distribution of Monthly Death Rate by Handwashing'
+                        ,barmode='overlay'
+                        ,histnorm='percent'
+                        )
      
-
+     fig.update_layout(xaxis_title='Proportion of Monthly Deaths'
+                       , yaxis_title='Count')
+     
+     fig.write_image('images/Histogram_Monthly_Distribution_Outcomes.png')
+     fig.show()
+Histogram_Monthly_Distribution_Outcomes()
+      
+    
 
 
 
