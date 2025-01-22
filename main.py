@@ -50,7 +50,6 @@ def yearly_births_deaths_clinic():
         line2.update_layout(xaxis_title='Year', yaxis_title='Births and Deaths')
         line2.write_image('images/yearly_births_deaths_clinic2.png')
         line2.show()
-yearly_births_deaths_clinic()
 #avarage of deths per clinic
 df_yearly['pct_deaths'] = df_yearly['deaths'] / df_yearly['births']
 df_clinic1 = df_yearly[df_yearly['clinic'] == 'clinic 1']
@@ -68,7 +67,51 @@ def yearly_pct_deaths():
     line.update_layout(xaxis_title='Year', yaxis_title='Percentage of Deaths')
     line.write_image('images/yearly_pct_deaths.png')
     line.show()
-yearly_pct_deaths()
-   
+# the effect of handwashing on the proportion of monthly deaths
+df_monthly['pct_deaths'] = df_monthly['deaths'] / df_monthly['births']
+#avarage rate after handwashing and before handwashing
+handwashing_start = pd.to_datetime('1847-06-01')
+before_handwashing = df_monthly[df_monthly.date < handwashing_start]
+after_handwashing = df_monthly[df_monthly.date >= handwashing_start]
+bw_rate = before_handwashing.deaths.sum() / before_handwashing.births.sum() * 100
+aw_rate = after_handwashing.deaths.sum() / after_handwashing.births.sum() * 100
+print(f"Average monthly deaths before handwashing: {bw_rate:.2f}%")
+print(f"Average monthly deaths after handwashing: {aw_rate:.2f}%")
+#Calculate a Rolling Average of the Death Rate 6-month
+roll_df = before_handwashing.set_index('date').rolling(window=6).mean()
+def after_and_before_handwashing():
+     plt.figure(figsize=(10, 4), dpi=110)
+     plt.title('Proportion of Monthly Deaths by Clinic, with Handwashing Start')
+     ax=plt.gca()
+    
+     bw_line= plt.plot(before_handwashing.date
+                       , before_handwashing.pct_deaths
+                       , color='skyblue'
+                       , label='before handwashing')
+     aw_line= plt.plot(after_handwashing.date
+                       , after_handwashing.pct_deaths
+                       , color='red'
+                       , label='after handwashing')
+     ma_line= plt.plot(roll_df.index
+                       , roll_df.pct_deaths
+                       , color='darkred'
+                       , label='6m rolling average')
+     # , label='6m rolling average')
+     plt.legend()
+     ax.xaxis.set_major_locator(mdates.YearLocator())
+     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+     ax.set_xlim([df_monthly.date.min(), df_monthly.date.max()])
+     plt.xlabel('Year')
+     plt.ylabel('Percentage of Monthly Deaths')
+     plt.savefig('images/after_and_before_handwashing.png')
+     plt.show()
+after_and_before_handwashing()
+     
+
+
+
+
+
+
 
 
