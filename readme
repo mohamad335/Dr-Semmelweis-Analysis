@@ -1,0 +1,41 @@
+# Dr. Semmelweis Analysis
+
+This project analyzes the impact of handwashing on monthly death rates using historical data. The analysis includes visualizations and statistical tests to determine the significance of handwashing in reducing deaths.
+
+## Project Structure
+
+- `main.py`: The main script that performs data analysis and visualization.
+- `data/`: Directory containing the datasets.
+  - `annual_deaths_by_clinic.csv`: Yearly death data by clinic.
+  - `monthly_deaths.csv`: Monthly death data.
+- `images/`: Directory containing the generated images.
+  - `Histogram_Monthly_Distribution_Outcomes.png`: Histogram of monthly death rate distribution.
+  - `KDE_Monthly_Distribution_Outcomes.png`: Kernel Density Estimate (KDE) plot of monthly death rate distribution.
+
+## Dependencies
+
+- pandas
+- numpy
+- plotly
+- seaborn
+- matplotlib
+- scipy
+
+## Installation
+
+To install the required dependencies, run:
+
+```sh
+pip install pandas numpy plotly seaborn matplotlib scipy
+python main.py
+Analysis
+The analysis includes the following steps:
+
+Data Loading: Load the yearly and monthly death data.
+Visualization: Create histograms and KDE plots to visualize the distribution of death rates before and after handwashing.
+Statistical Test: Perform a t-test to determine if the difference in death rates before and after handwashing is statistically significant.
+Results
+The results of the t-test are printed to the console, including the p-value and t-statistic. A small p-value (e.g., less than 0.05) suggests that handwashing had a significant effect on reducing deaths.
+License
+This project is licensed under the MIT License.
+
